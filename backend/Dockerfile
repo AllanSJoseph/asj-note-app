@@ -1,5 +1,7 @@
 FROM python:3.12-alpine
 
+RUN apk add --no-cache curl
+
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
@@ -14,4 +16,6 @@ COPY . .
 
 EXPOSE 8000
 
+RUN chmod +x /app/entrypoint.sh
 
+CMD ["/app/entrypoint.sh"]

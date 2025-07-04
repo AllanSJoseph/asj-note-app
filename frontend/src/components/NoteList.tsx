@@ -26,7 +26,7 @@ function NoteList() {
 
     const getNotes = () => {
         api
-            .get("/api/notes")
+            .get("/api/notes/")
             .then((res) => res.data)
             .then((data) => {
                 setNotes(data);
