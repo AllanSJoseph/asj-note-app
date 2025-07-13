@@ -38,8 +38,21 @@ function EditProfile() {
                     }else if (response.status == 204){
                         alert("Please Fill the details below!");
                     }
-                }).catch((err) => console.log(err))
-                .finally(() => setLoading(false));
+                }).catch((err) => {
+                    console.log(err)
+                    if (err.response){
+                        if (err.response.status === 403){
+                            alert("Cannot Update Password! Incorrect Previous Password! Access denied!");
+                        }else if (err.response.status === 400){
+                            alert("Validation Error: " + JSON.stringify(err.response.data));
+                        }else {
+                            alert(`Error ${err.response.status}: ${err.response.statusText}`);
+                        }
+                    } else {
+                        alert("Oops, Something Went Wrong! Please Try Again Later!");
+                    }
+
+                }).finally(() => setLoading(false));
         }
 
     };

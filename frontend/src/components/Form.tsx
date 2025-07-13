@@ -22,22 +22,29 @@ function Form({route, method} : FormProps) {
         setLoading(true);
         e.preventDefault();
 
-        try{
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            const res: AxiosResponse<AuthResponse> = await api.post(route, {username, password});
-            if (method === "login") {
-                localStorage.setItem(ACCESS_TOKEN, res.data.access);
-                localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-                navigate("/");
-            } else {
-                navigate("/login");
+        if (username === "" || password === "") {
+            alert("Please fill in all details.")
+        } else {
+            try{
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                const res: AxiosResponse<AuthResponse> = await api.post(route, {username, password});
+                if (method === "login") {
+                    localStorage.setItem(ACCESS_TOKEN, res.data.access);
+                    localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+                    navigate("/");
+                } else {
+                    navigate("/login");
+                }
+            }catch(e){
+                alert("Please Enter a Valid Username or Password!")
+                console.error(e)
+            }finally {
+                setLoading(false);
             }
-        }catch(e){
-            alert(e)
-        }finally {
-            setLoading(false);
         }
+
+
     }
 
     return (

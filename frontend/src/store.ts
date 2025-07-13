@@ -8,16 +8,15 @@ type NewNoteStore = {
     setCreated: (newNoteCreated: boolean) => void;
 }
 
-// type NoteToEdit = {
-//     oldTitle: string;
-//     oldContent: string;
-// }
-
 type EditNoteStore = {
     note:  NoteEntry | null ;
+    edited: boolean | false;
     setToEditNote: (note: NoteEntry) => void;
     resetToEditNote: () => void;
+    setEdited: (editNote: boolean) => void;
 }
+
+
 
 export const useNewNoteStore = create<NewNoteStore>((set) => ({
     created: false,
@@ -26,6 +25,8 @@ export const useNewNoteStore = create<NewNoteStore>((set) => ({
 
 export const useEditNoteStore = create<EditNoteStore>((set) => ({
     note: null,
+    edited: false,
     setToEditNote: (oldNote) => set({note: oldNote}),
     resetToEditNote: () => set({note: null}),
+    setEdited: (noteEdited) => set({edited: noteEdited}),
 }))

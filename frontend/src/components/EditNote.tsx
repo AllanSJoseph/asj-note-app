@@ -11,6 +11,8 @@ function EditNote(){
     const setToEditNote = useEditNoteStore((state) => state.note);
     const resetEditNote = useEditNoteStore((state) => state.resetToEditNote);
 
+    const setEdited = useEditNoteStore((state) => state.setEdited)
+
     useEffect(() => {
         if (setToEditNote != undefined){
             setNewTitle(setToEditNote.title);
@@ -37,6 +39,7 @@ function EditNote(){
                 else alert("Note updated!");
                 setNewTitle("");
                 setNewContent("");
+                setEdited(true);
                 resetEditNote();
             }).catch((error) => {alert(error)})
             .finally(() => setLoading(false));

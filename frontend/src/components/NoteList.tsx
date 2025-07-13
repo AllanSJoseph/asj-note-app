@@ -5,18 +5,15 @@ import type {NoteEntry} from "../types.ts";
 
 import {useNewNoteStore, useEditNoteStore} from "../store.ts";
 
-// type NoteEntries = {
-//     id: number;
-//     title: string;
-//     content: string;
-//     created_at: string
-// }
 
 function NoteList() {
     const [notes, setNotes] = useState<NoteEntry[]>([]);
 
     const created = useNewNoteStore((state) => state.created);
     const setCreated = useNewNoteStore((state) => state.setCreated)
+
+    const edited = useEditNoteStore((state) => state.edited)
+    const setEdited = useEditNoteStore((state) => state.setEdited)
 
     const toEdit = useEditNoteStore((state) => state.setToEditNote)
 
@@ -38,6 +35,11 @@ function NoteList() {
     if (created){
         getNotes();
         setCreated(false);
+    }
+
+    if (edited){
+        getNotes();
+        setEdited(false);
     }
 
     const deleteNote = (id: number) => {

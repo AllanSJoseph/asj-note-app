@@ -1,6 +1,8 @@
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework.exceptions import PermissionDenied
+
 from .models import Note
 
 
@@ -28,7 +30,7 @@ class PasswordSerializer(serializers.Serializer):
     def validate_old_password(self, value):
         user = self.context["request"].user
         if not check_password(value, user.password):
-            raise serializers.ValidationError("Wrong old password")
+            raise PermissionDenied("Incorrect Previous Password");
         return value
 
     def check_new_password(self, value):
